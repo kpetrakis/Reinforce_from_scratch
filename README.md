@@ -24,9 +24,5 @@ Epoch = 1800 | 100-mean Episode length = 493.5899963378906
 Epoch = 1900 | 100-mean Episode length = 478.6099853515625
 
 
-Visualization::
-
-![Results](/REINFORCE_from_scratch.png "Results").
-
 
 TODO:
