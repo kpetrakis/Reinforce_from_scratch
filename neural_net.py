@@ -6,7 +6,6 @@ from torch import tensor
 import gym
 import random
 import matplotlib.pyplot as plt
-from itertools import count
 
 class PolicyNet(nn.Module):
     def __init__(self,obs_dim,act_dim):

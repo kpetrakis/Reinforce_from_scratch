@@ -1,4 +1,7 @@
 from neural_net import *
+from itertools import count
+import argparse
+
 
 env = gym.make('CartPole-v1')
 act_dim = env.action_space.n
@@ -24,10 +27,18 @@ def rewards_to_go(rews):
 # Policy Net instatiation
 policy = PolicyNet(obs_dim, act_dim)
 
+# command line 
+parser = argparse.ArgumentParser("Reinforce from scratch")
+parser.add_argument('-g','--gamma', type=float,default=0.99, help="Gamma parameter for sum of discountet rewards")
+parser.add_argument('-lr', '--learning_rate', type=float, default=1e-3, help='Learning rate')
+parser.add_argument('-e','--epochs', type=int, default=2000, help='Epochs to train on')
+args = parser.parse_args()
+argv = vars(args)
+
 # Hyperparameters
-gamma = 0.99
-lr = 1e-3
-epochs = 2000 
+gamma = argv['gamma']
+lr = argv['learning_rate']
+epochs = argv['epochs'] 
 
 optimizer = torch.optim.Adam(policy.parameters(), lr=lr)
 
@@ -57,7 +68,7 @@ for epoch in range(epochs):
     ep_len = 0
 
     # collect a set of trajectories D_k by running policy π_κ in the enviroment
-    for t in range(1,1000):
+    for t in count():
         obs = torch.tensor(obs,dtype=torch.float32).unsqueeze(0)
 
         probs = policy(obs) # probs = PolicyNet(obs) -> Softmax(logits) = probabilities of actions! -> p.x. [0.43 0.57]
